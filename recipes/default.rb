@@ -7,12 +7,15 @@
 # All rights reserved - Do Not Redistribute
 #
 
-group 'hadoop'
+# group 'hadoop'
+group node['hadoop-hue-hive']['user']
 
-user 'hduser' do
-  group 'hadoop'
+user_home = "/home/#{node['hadoop-hue-hive']['user']}"
+
+user node['hadoop-hue-hive']['group'] do
+  group node['hadoop-hue-hive']['user']
   shell '/bin/bash'
-  home '/home/hduser'
+  home user_home
   password '$1$RF0eUP9s$r.H4rcWvQ9zc5REJydT2c/'
   action :create
 end

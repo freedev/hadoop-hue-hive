@@ -1,6 +1,6 @@
 name             'hadoop-hue-hive'
-maintainer       'YOUR_NAME'
-maintainer_email 'YOUR_EMAIL'
+maintainer       "Vincenzo D'Amore"
+maintainer_email 'v.damore@gmail.com'
 license          'All rights reserved'
 description      'Installs/Configures hadoop-hue-hive'
 long_description 'Installs/Configures hadoop-hue-hive'
