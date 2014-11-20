@@ -37,6 +37,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   if provider == :virtualbox
     puts "* Using virtualbox *"
     config.vm.box = 'chef/ubuntu-14.04'
+    config.vm.synced_folder ".", "/vagrant", type: "nfs"
   end
 
   if provider == :lxc
@@ -97,11 +98,26 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         server_root_password: 'rootpass',
         server_debian_password: 'debpass',
         server_repl_password: 'replpass'
+      },
+      :java => {
+        :install_flavor => 'oracle',
+        :jdk_version => 8,
+        :oracle => {
+          :accept_oracle_download_terms => true
+        }
       }
     }
 
+    chef.cookbooks_path = "cookbooks"
+    chef.data_bags_path = "data_bags"
+
     chef.run_list = [
+    # recipe for a server to provide APT caching 
+      'recipe[apt::cacher-ng]',
+      'recipe[hadoop-hue-hive::apt-get-update]',
       'recipe[ssh_known_hosts]',
+      'recipe[java::default]',
+      'recipe[maven::default]',
       'recipe[hadoop-hue-hive::default]'
     ]
   end
