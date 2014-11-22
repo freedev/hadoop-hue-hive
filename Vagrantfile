@@ -118,7 +118,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       'recipe[ssh_known_hosts]',
       'recipe[java::default]',
       'recipe[maven::default]',
-      'recipe[hadoop-hue-hive::default]'
+      'recipe[hadoop-hue-hive::hadoop]'
     ]
   end
 end
