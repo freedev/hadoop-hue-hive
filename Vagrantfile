@@ -92,7 +92,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # config.berkshelf.except = []
 
   config.vm.provision :chef_solo do |chef|
+
+    chef.log_level = :debug
+
     chef.custom_config_path = "Vagrantfile.chef"
+
     chef.json = {
       mysql: {
         server_root_password: 'rootpass',
@@ -118,7 +122,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       'recipe[ssh_known_hosts]',
       'recipe[java::default]',
       'recipe[maven::default]',
-      'recipe[hadoop-hue-hive::hadoop]'
+      'recipe[hadoop-hue-hive::hadoop]',
+      'recipe[hadoop-hue-hive::hive]'
     ]
   end
 end
