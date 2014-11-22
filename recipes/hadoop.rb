@@ -1,5 +1,5 @@
 #
-# Cookbook Name:: hadoop-hue-hive
+# Cookbook Name:: hadoop
 # Recipe:: default
 #
 # Copyright (C) 2014 Vincenzo D'Amore v.damore@gmail.com
@@ -9,10 +9,10 @@
 
 require 'uri'
 
-hadoop_user = node['hadoop-hue-hive']['user']
-hadoop_group = node['hadoop-hue-hive']['group']
+hadoop_user = node['hadoop']['user']
+hadoop_group = node['hadoop']['group']
 hadoop_user_home = "/home/#{hadoop_user}"
-hadoop_url = node['hadoop-hue-hive']['url_src']
+hadoop_url = node['hadoop']['url_src']
 hadoop_uri = URI.parse(hadoop_url)
 hadoop_filename = File.basename(hadoop_uri.path)
 hadoop_basename = File.basename(hadoop_uri.path, '.tar.gz')
@@ -100,7 +100,7 @@ template "#{hadoop_home}/etc/hadoop/hdfs-site.xml" do
   action :create
 end
 
-execute "modify-bashrc" do
+execute "hadoop-namenode-format" do
   user hadoop_user
   group hadoop_group
   command ". #{hadoop_user_home}/.bashrc && #{hadoop_home}/bin/hadoop namenode -format"
