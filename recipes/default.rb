@@ -101,10 +101,12 @@ template "#{hadoop_home}/etc/hadoop/hdfs-site.xml" do
 end
 
 execute "modify-bashrc" do
-  user "root"
-  command "#{hadoop_home}/bin/hadoop namenode -format"
+  user hadoop_user
+  group hadoop_group
+  command ". #{hadoop_user_home}/.bashrc && #{hadoop_home}/bin/hadoop namenode -format"
   action :run
-  cwd basedir
+  cwd hadoop_user_home
+  environment ({'HOME' => hadoop_user_home, 'USER' => hadoop_user})
   returns 0
 end
 
